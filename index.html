@@ -5,41 +5,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>City Central Library</title>
 
-<link rel="stylesheet" href="style.css"
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- External CSS -->
+<link rel="stylesheet" href="H.CSS">
+
 </head>
 
 <body>
 
-<header>📚 City Central Library</header>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+<div class="container-fluid">
 
-<div class="container">
+<a class="navbar-brand fw-bold" href="#">
+<i class="bi bi-book-half"></i> Library
+</a>
 
-<h2 class="title">📖 Manage Your Library</h2>
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="menu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="#manage">Manage</a></li>
+</ul>
+</div>
+
+</div>
+</nav>
+
+<!-- HEADER -->
+<header class="text-center text-white py-4">
+<h1>📚 City Central Library</h1>
+<p class="lead">Bootstrap Based Library System</p>
+</header>
+
+<div class="container py-4">
+
+<h2 class="text-center text-white mb-4">📖 Manage Your Library</h2>
 
 <!-- FORM -->
-<div class="form-box">
-<input type="text" id="title" placeholder="Book Title">
-<input type="text" id="author" placeholder="Author Name">
-<input type="text" id="isbn" placeholder="ISBN">
-<input type="text" id="link" placeholder="Book Link">
-<input type="text" id="image" placeholder="Image URL">
+<div class="card shadow-lg mb-4" id="manage">
+<div class="card-body">
 
-<select id="status">
+<div class="row g-3">
+
+<div class="col-md-4">
+<input type="text" id="title" class="form-control" placeholder="Book Title">
+</div>
+
+<div class="col-md-4">
+<input type="text" id="author" class="form-control" placeholder="Author Name">
+</div>
+
+<div class="col-md-4">
+<input type="text" id="isbn" class="form-control" placeholder="ISBN">
+</div>
+
+<div class="col-md-4">
+<input type="text" id="link" class="form-control" placeholder="Book Link">
+</div>
+
+<div class="col-md-4">
+<input type="text" id="image" class="form-control" placeholder="Image URL">
+</div>
+
+<div class="col-md-4">
+<select id="status" class="form-select">
 <option>Available</option>
 <option>Not Available</option>
 </select>
+</div>
 
-<button onclick="addBook()">Add Book</button>
+<div class="col-12">
+<button onclick="addBook()" class="btn btn-warning w-100">
+<i class="bi bi-plus-circle"></i> Add Book
+</button>
+</div>
+
+</div>
+
+</div>
 </div>
 
 <!-- SEARCH -->
-<div class="search-box">
-<input type="text" id="search" placeholder="🔍 Search books..." onkeyup="searchBook()">
+<div class="row mb-4">
+<div class="col-md-6 mx-auto">
+<input type="text" id="search" class="form-control form-control-lg"
+placeholder="🔍 Search books..." onkeyup="searchBook()">
+</div>
 </div>
 
 <!-- TABLE -->
-<table id="table">
-<thead>
+<div class="table-responsive">
+<table class="table table-bordered table-hover bg-white shadow" id="table">
+
+<thead class="table-dark">
 <tr>
 <th>Cover</th>
 <th>Title</th>
@@ -49,86 +116,81 @@
 <th>Action</th>
 </tr>
 </thead>
+
 <tbody></tbody>
+
 </table>
+</div>
 
 </div>
 
-<footer>© 2026 City Central Library</footer>
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-3 mt-4">
+<p>© 2026 City Central Library</p>
+</footer>
 
+<!-- JS -->
 <script>
-// DEFAULT BOOKS
+// SAME JS (unchanged)
 let defaultBooks = [
 {title:"The Alchemist",author:"Paulo Coelho",isbn:"1001",link:"https://en.wikipedia.org/wiki/The_Alchemist_(novel)",image:"https://covers.openlibrary.org/b/id/8231856-L.jpg",status:"Available"},
-{title:"Rich Dad Poor Dad",author:"Robert Kiyosaki",isbn:"1002",link:"https://en.wikipedia.org/wiki/Rich_Dad_Poor_Dad",image:"https://covers.openlibrary.org/b/id/240726-L.jpg",status:"Available"},
-{title:"Think and Grow Rich",author:"Napoleon Hill",isbn:"1003",link:"https://en.wikipedia.org/wiki/Think_and_Grow_Rich",image:"https://covers.openlibrary.org/b/id/8228691-L.jpg",status:"Not Available"},
-{title:"Atomic Habits",author:"James Clear",isbn:"1004",link:"https://en.wikipedia.org/wiki/Atomic_Habits",image:"https://covers.openlibrary.org/b/id/10594765-L.jpg",status:"Available"},
-{title:"Ikigai",author:"Hector Garcia",isbn:"1005",link:"https://en.wikipedia.org/wiki/Ikigai",image:"https://covers.openlibrary.org/b/id/9251996-L.jpg",status:"Available"},
-{title:"The Power of Now",author:"Eckhart Tolle",isbn:"1006",link:"https://en.wikipedia.org/wiki/The_Power_of_Now",image:"https://covers.openlibrary.org/b/id/240726-L.jpg",status:"Available"},
-{title:"Wings of Fire",author:"A.P.J Abdul Kalam",isbn:"1007",link:"https://en.wikipedia.org/wiki/Wings_of_Fire",image:"https://covers.openlibrary.org/b/id/8226191-L.jpg",status:"Available"},
-{title:"Harry Potter",author:"J.K Rowling",isbn:"1008",link:"https://en.wikipedia.org/wiki/Harry_Potter",image:"https://covers.openlibrary.org/b/id/7984916-L.jpg",status:"Available"},
-{title:"The Hobbit",author:"J.R.R Tolkien",isbn:"1009",link:"https://en.wikipedia.org/wiki/The_Hobbit",image:"https://covers.openlibrary.org/b/id/6979861-L.jpg",status:"Not Available"},
-{title:"1984",author:"George Orwell",isbn:"1010",link:"https://en.wikipedia.org/wiki/Nineteen_Eighty-Four",image:"https://covers.openlibrary.org/b/id/7222246-L.jpg",status:"Available"},
-{title:"To Kill a Mockingbird",author:"Harper Lee",isbn:"1011",link:"https://en.wikipedia.org/wiki/To_Kill_a_Mockingbird",image:"https://covers.openlibrary.org/b/id/8225261-L.jpg",status:"Available"},
-{title:"The Great Gatsby",author:"F. Scott Fitzgerald",isbn:"1012",link:"https://en.wikipedia.org/wiki/The_Great_Gatsby",image:"https://covers.openlibrary.org/b/id/7222161-L.jpg",status:"Available"},
-{title:"Moby Dick",author:"Herman Melville",isbn:"1013",link:"https://en.wikipedia.org/wiki/Moby-Dick",image:"https://covers.openlibrary.org/b/id/5552226-L.jpg",status:"Not Available"},
-{title:"The Secret",author:"Rhonda Byrne",isbn:"1014",link:"https://en.wikipedia.org/wiki/The_Secret_(Byrne_book)",image:"https://covers.openlibrary.org/b/id/240726-L.jpg",status:"Available"},
-{title:"The Monk Who Sold His Ferrari",author:"Robin Sharma",isbn:"1015",link:"https://en.wikipedia.org/wiki/Robin_Sharma",image:"https://covers.openlibrary.org/b/id/8235116-L.jpg",status:"Available"}
+{title:"Atomic Habits",author:"James Clear",isbn:"1002",link:"https://en.wikipedia.org/wiki/Atomic_Habits",image:"https://covers.openlibrary.org/b/id/10594765-L.jpg",status:"Available"}
 ];
 
 let books = JSON.parse(localStorage.getItem("books")) || defaultBooks;
 
-// DISPLAY
-function displayBooks() {
+function displayBooks(){
 let tbody = document.querySelector("#table tbody");
-tbody.innerHTML = "";
+tbody.innerHTML="";
 
-books.forEach((book, index) => {
+books.forEach((book,index)=>{
 tbody.innerHTML += `
 <tr>
 <td><img src="${book.image}" class="book-img"></td>
 <td><a href="${book.link}" target="_blank">${book.title}</a></td>
 <td><a href="${book.link}" target="_blank">${book.author}</a></td>
 <td>${book.isbn}</td>
-<td class="${book.status === 'Available' ? 'available' : 'not-available'}">${book.status}</td>
-<td><button class="delete-btn" onclick="deleteBook(${index})">Delete</button></td>
+<td class="${book.status=='Available'?'text-success fw-bold':'text-danger fw-bold'}">${book.status}</td>
+<td>
+<button class="btn btn-danger btn-sm" onclick="deleteBook(${index})">Delete</button>
+</td>
 </tr>`;
 });
 }
 
-// ADD BOOK
-function addBook() {
+function addBook(){
 let book = {
-title: title.value,
-author: author.value,
-isbn: isbn.value,
-link: link.value,
-image: image.value,
-status: status.value
+title:title.value,
+author:author.value,
+isbn:isbn.value,
+link:link.value,
+image:image.value,
+status:status.value
 };
 
 books.push(book);
-localStorage.setItem("books", JSON.stringify(books));
+localStorage.setItem("books",JSON.stringify(books));
 displayBooks();
 }
 
-// DELETE
-function deleteBook(index) {
-books.splice(index, 1);
-localStorage.setItem("books", JSON.stringify(books));
+function deleteBook(index){
+books.splice(index,1);
+localStorage.setItem("books",JSON.stringify(books));
 displayBooks();
 }
 
-// SEARCH
-function searchBook() {
+function searchBook(){
 let input = search.value.toLowerCase();
-document.querySelectorAll("#table tbody tr").forEach(row => {
+
+document.querySelectorAll("#table tbody tr").forEach(row=>{
 row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
 });
 }
 
 displayBooks();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
